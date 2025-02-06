@@ -63,12 +63,23 @@ pipeline {
       steps {
         sh "mvn test"
       }
-      post{
-        always{
-          junit 'target/surfire-reports/*.xml'
-          jacoco execPattern: 'target/jacoco.exec'
-        }
-      }
+
+      post {
+                always {
+                    jacoco execPattern: '**/target/jacoco.exec', 
+                           classPattern: '**/target/classes', 
+                           sourcePattern: '**/src/main/java',
+                           inclusionPattern: '**/*.class',
+                           exclusionPattern: '**/test/**'
+                }
+            }
+            
+      // post{
+      //   always{
+      //     junit 'target/surfire-reports/*.xml'
+      //     jacoco execPattern: 'target/jacoco.exec'
+      //   }
+      // }
     }
 
  //    stage('Mutation Tests - PIT') {
