@@ -63,6 +63,12 @@ pipeline {
       steps {
         sh "mvn test"
       }
+      post{
+        always{
+          junit 'target/surfire-reports/*.xml'
+          jacoco execPattern: 'target/jacoco.exec'
+        }
+      }
     }
 
  //    stage('Mutation Tests - PIT') {
