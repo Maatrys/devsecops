@@ -59,11 +59,11 @@ pipeline {
       }
     }
 
- //    stage('Unit Tests - JUnit and JaCoCo') {
- //      steps {
- //        sh "mvn test"
- //      }
- //    }
+    stage('Unit Tests - JUnit and JaCoCo') {
+      steps {
+        sh "mvn test"
+      }
+    }
 
  //    stage('Mutation Tests - PIT') {
  //      steps {
