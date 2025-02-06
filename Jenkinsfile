@@ -93,14 +93,29 @@ pipeline {
       }
     }
 
+    // stage('SonarQube - SAST') {
+    //   steps {
+    //     withSonarQubeEnv('SonarQube') {
+    //       sh "mvn sonar:sonar \
+		//               -Dsonar.projectKey=numeric-application \
+		//               -Dsonar.host.url=http://devsecops-maat.eastus.cloudapp.azure.com:9000 \
+    //               -Dsonar.login=sqp_35308c87bb25c0086770b0cdbb325c1292b2c95d"
+    //     }
+    //     // timeout(time: 2, unit: 'MINUTES') {
+    //     //   script {
+    //     //     waitForQualityGate abortPipeline: true
+    //     //   }
+    //     // }
+    //   }
+    // }
+
     stage('SonarQube - SAST') {
       steps {
-        withSonarQubeEnv('SonarQube') {
           sh "mvn sonar:sonar \
 		              -Dsonar.projectKey=numeric-application \
 		              -Dsonar.host.url=http://devsecops-maat.eastus.cloudapp.azure.com:9000 \
                   -Dsonar.login=sqp_35308c87bb25c0086770b0cdbb325c1292b2c95d"
-        }
+      
         // timeout(time: 2, unit: 'MINUTES') {
         //   script {
         //     waitForQualityGate abortPipeline: true
