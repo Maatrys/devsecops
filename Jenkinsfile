@@ -324,7 +324,7 @@ pipeline {
 	    //       env.emoji = ":x: :red_circle: :sos:"
 		  //    // sendNotification currentBuild.result
 		  //   }	
-	    }
+	    // }
     }
 
 }
