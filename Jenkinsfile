@@ -93,36 +93,33 @@ pipeline {
       }
     }
 
+    stage('SonarQube - SAST') {
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh "mvn sonar:sonar \
+		              -Dsonar.projectKey=numeric-application \
+		              -Dsonar.host.url=http://devsecops-maat.eastus.cloudapp.azure.com:9000"
+        }
+        timeout(time: 2, unit: 'MINUTES') {
+           script {
+             waitForQualityGate abortPipeline: true
+           }
+         }
+      }
+    }
+
+// simple integration without quality gate checking 
     // stage('SonarQube - SAST') {
     //   steps {
-    //     withSonarQubeEnv('SonarQube') {
     //       sh "mvn sonar:sonar \
 		//               -Dsonar.projectKey=numeric-application \
 		//               -Dsonar.host.url=http://devsecops-maat.eastus.cloudapp.azure.com:9000 \
-    //               -Dsonar.login=sqp_35308c87bb25c0086770b0cdbb325c1292b2c95d"
-    //     }
-    //     // timeout(time: 2, unit: 'MINUTES') {
-    //     //   script {
-    //     //     waitForQualityGate abortPipeline: true
-    //     //   }
-    //     // }
+    //               -Dsonar.token=sqp_35308c87bb25c0086770b0cdbb325c1292b2c95d"
     //   }
     // }
+// end simple example
 
-    stage('SonarQube - SAST') {
-      steps {
-          sh "mvn sonar:sonar \
-		              -Dsonar.projectKey=numeric-application \
-		              -Dsonar.host.url=http://devsecops-maat.eastus.cloudapp.azure.com:9000 \
-                  -Dsonar.login=sqp_35308c87bb25c0086770b0cdbb325c1292b2c95d"
-      
-        // timeout(time: 2, unit: 'MINUTES') {
-        //   script {
-        //     waitForQualityGate abortPipeline: true
-        //   }
-        // }
-      }
-    }
+
 
 	// stage('Vulnerability Scan - Docker') {
  //      steps {
