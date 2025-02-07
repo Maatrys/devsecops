@@ -63,16 +63,16 @@ pipeline {
       steps {
         sh "mvn test"
       }
-
-      post {
-                always {
-                    jacoco execPattern: '**/target/jacoco.exec', 
-                           classPattern: '**/target/classes', 
-                           sourcePattern: '**/src/main/java',
-                           inclusionPattern: '**/*.class',
-                           exclusionPattern: '**/test/**'
-                }
-            }
+        // refactored and moved to the bottom of the file
+      // post {
+      //           always {
+      //               jacoco execPattern: '**/target/jacoco.exec', 
+      //                      classPattern: '**/target/classes', 
+      //                      sourcePattern: '**/src/main/java',
+      //                      inclusionPattern: '**/*.class',
+      //                      exclusionPattern: '**/test/**'
+      //           }
+      //       }
 
       // post{
       //   always{
@@ -86,11 +86,12 @@ pipeline {
       steps {
         sh "mvn org.pitest:pitest-maven:mutationCoverage"
       }
-      post{
-        always{
-          pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-        }
-      }
+       // refactored and moved to the bottom of the file
+      // post{
+      //   always{
+      //     pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+      //   }
+      // }
     }
 
     stage('SonarQube - SAST') {
@@ -294,36 +295,36 @@ pipeline {
 
   }
 
-  // post { 
-  //    //    always { 
-  //    //      junit 'target/surefire-reports/*.xml'
-  //    //      jacoco execPattern: 'target/jacoco.exec'
-  //    //      pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-  //    //      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-  //    //      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP ZAP HTML Report'])
+  post { 
+        always { 
+          junit 'target/surefire-reports/*.xml'
+          jacoco execPattern: 'target/jacoco.exec'
+          pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+          dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+          // publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP ZAP HTML Report'])
         
- 	// 	  // //Use sendNotifications.groovy from shared library and provide current build result as parameter 
-  //    //      //sendNotification currentBuild.result
-  //    //    }
+ 		  //Use sendNotifications.groovy from shared library and provide current build result as parameter 
+          //sendNotification currentBuild.result
+        }
 
-  //       success {
-  //       	script {
-	// 	        /* Use slackNotifier.groovy from shared library and provide current build result as parameter */  
-	// 	        env.failedStage = "none"
-	// 	        env.emoji = ":white_check_mark: :tada: :thumbsup_all:" 
-	// 	       // sendNotification currentBuild.result
-	// 	      }
-  //       }
+      //   success {
+      //   	script {
+		  //       /* Use slackNotifier.groovy from shared library and provide current build result as parameter */  
+		  //       env.failedStage = "none"
+		  //       env.emoji = ":white_check_mark: :tada: :thumbsup_all:" 
+		  //      // sendNotification currentBuild.result
+		  //     }
+      //   }
 
-	//     failure {
-	//     	script {
-	// 		  //Fetch information about  failed stage
-	// 	      def failedStages = getFailedStages( currentBuild )
-	//           env.failedStage = failedStages.failedStageName
-	//           env.emoji = ":x: :red_circle: :sos:"
-	// 	     // sendNotification currentBuild.result
-	// 	    }	
-	//     }
-  //   }
+	    // failure {
+	    // 	script {
+			//   //Fetch information about  failed stage
+		  //     def failedStages = getFailedStages( currentBuild )
+	    //       env.failedStage = failedStages.failedStageName
+	    //       env.emoji = ":x: :red_circle: :sos:"
+		  //    // sendNotification currentBuild.result
+		  //   }	
+	    }
+    }
 
 }
