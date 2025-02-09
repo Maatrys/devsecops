@@ -46,7 +46,7 @@ kind: Service
 metadata:
   labels:
     app: devsecops
-  name: devsecops-svc
+  name: node-service
 spec:
   ports:
   - port: 8080
