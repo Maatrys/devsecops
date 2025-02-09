@@ -20,7 +20,7 @@ spec:
       - name: vol
         emptyDir: {}
       containers:
-      - image: maatrys/numeric-app
+      - image: nginx:alpine
         name: devsecops-container
         volumeMounts:
           - mountPath: /tmp
