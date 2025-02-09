@@ -20,7 +20,7 @@ spec:
       - name: vol
         emptyDir: {}
       containers:
-      - image: nginx:alpine
+      - image: replace
         name: devsecops-container
         volumeMounts:
           - mountPath: /tmp
